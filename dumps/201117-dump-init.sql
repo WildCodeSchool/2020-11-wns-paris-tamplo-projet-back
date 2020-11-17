@@ -32,7 +32,7 @@ CREATE TABLE `mood` (
   PRIMARY KEY (`id`),
   KEY `fk_mood_idx` (`student_id`),
   CONSTRAINT `fk_mood` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `mood` (
 
 LOCK TABLES `mood` WRITE;
 /*!40000 ALTER TABLE `mood` DISABLE KEYS */;
-INSERT INTO `mood` VALUES (1,3,'2020-11-17 13:12:54',2),(2,2,'2020-11-17 13:12:54',1),(3,4,'2020-11-16 13:13:30',2),(4,5,'2020-11-16 13:13:30',1);
+INSERT INTO `mood` VALUES (1,3,'2020-11-17 13:12:54',2),(2,2,'2020-11-17 13:12:54',1),(3,4,'2020-11-16 13:13:30',2),(4,5,'2020-11-16 13:13:30',1),(5,5,'2020-11-17 13:26:45',3);
 /*!40000 ALTER TABLE `mood` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -57,7 +57,7 @@ CREATE TABLE `student` (
   `firstname` varchar(45) COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `lastname` varchar(45) COLLATE utf8mb4_unicode_520_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,7 +66,7 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES (1,'John','Doe'),(2,'Jane','Doe');
+INSERT INTO `student` VALUES (1,'John','Doe'),(2,'Jane','Doe'),(3,'Audrey','Ritzenthaler');
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -79,4 +79,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-17 13:16:20
+-- Dump completed on 2020-11-17 13:27:20
