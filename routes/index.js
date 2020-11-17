@@ -1,5 +1,7 @@
-const student = require('./student')
+const moods = require('./moods')
+const students = require('./students')
 
 module.exports = {
-  student
+  moods,
+  students
 }
