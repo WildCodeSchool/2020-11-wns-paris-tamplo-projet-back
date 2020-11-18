@@ -1,9 +1,15 @@
 const express = require('express')
 const router = express.Router()
+const dotenv = require('dotenv')
+dotenv.config()
 
 const connection = require('../config/database')
 
 router.get('/', (req, res) => {
+  const mdp = req.query.mdp
+  if (mdp !== process.env.PWD_TEACHER) {
+    return res.status(401).json({ message: 'Get the fuck out!' })
+  }
   connection.query(
     'SELECT *, DATE_FORMAT(mood.date, "%D %b %Y") as date FROM student JOIN mood ON student.id=mood.student_id;',
     (error, results) => {
