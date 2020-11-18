@@ -16,4 +16,15 @@ router.get('/', (req, res) => {
   )
 })
 
+router.post('/', (req, res) => {
+  const formData = req.body
+  connection.query('INSERT INTO mood SET ?;', formData, (error, results) => {
+    if (error) {
+      res.status(500).json({ message: "Impossible d'ajouter ton mood !" })
+    } else {
+      res.json(results)
+    }
+  })
+})
+
 module.exports = router
