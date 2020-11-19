@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
     return res.status(401).json({ message: 'Get the fuck out!' })
   }
   connection.query(
-    'SELECT *, DATE_FORMAT(mood.date, "%D %b %Y") as date FROM student JOIN mood ON student.id=mood.student_id;',
+    'SELECT *, DATE_FORMAT(mood.date, "%Y %m %d") as date FROM student JOIN mood ON student.id=mood.student_id;',
     (error, results) => {
       if (error) {
         res.status(500).json({ error: 'Impossible de récupérer les données' })
