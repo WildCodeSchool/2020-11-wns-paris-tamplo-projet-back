@@ -1,25 +1,16 @@
-const mysql = require('mysql')
+const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 dotenv.config()
 
-const connection = mysql.createPool(
-  typeof process.env.CLEARDB_DATABASE_URL === 'string'
-    ? process.env.CLEARDB_DATABASE_URL
-    : {
-        host: process.env.DB_HOST,
-        user: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_DATABASE
-      }
-)
+// Connect to database
+const databaseConnection = mongoose
+  .connect(`mongodb://127.0.0.1:27017/${process.env.DB_DATABASE}`, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    autoIndex: true
+  })
+  .then(() => console.log('Connected to database'))
+  .catch((err) => console.log(err))
 
-// // Test connection to the Database
-connection.getConnection((err) => {
-  if (err) {
-    console.error('Error connecting to database', err)
-  } else {
-    console.log('Database is connected')
-  }
-})
-
-module.exports = connection
+module.exports = databaseConnection
