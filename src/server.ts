@@ -1,13 +1,8 @@
 import { ApolloServer } from 'apollo-server'
-import { getAll } from './graphql/query'
+import resolvers from './graphql/resolver/resolvers'
 
-import schema from './graphql/schema.students'
+import schema from './graphql/schema/students'
 
-const resolvers = {
-  Query: {
-    allStudents: async () => getAll('nameTableToDefineHere')
-  }
-}
 const server = new ApolloServer({
   typeDefs: schema,
   resolvers
