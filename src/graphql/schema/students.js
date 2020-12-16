@@ -9,6 +9,24 @@ const typeDefs = gql`
     id: ID!
     firstname: String
     lastname: String
+    mood: [Mood]
+  }
+
+  type Mood {
+    id: ID!
+    note: Int
+    comment: String
+    created_at: String
+  }
+
+  input MoodInput {
+    note: Int!
+    comment: String
+  }
+
+  type Mutation {
+    createMood(mood: MoodInput): Mood
   }
 `
+
 export { typeDefs as default }
