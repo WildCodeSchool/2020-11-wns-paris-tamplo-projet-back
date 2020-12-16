@@ -3,13 +3,13 @@ import { IStudent } from '../../type'
 
 const resolvers = {
   Query: {
-    allStudents: async (): Promise<IStudent[] | undefined> => {
+    allStudents: async (): Promise<IStudent[]> => {
       try {
-        const students = await studentSchema.find()
-        console.log(students)
-        return students
-      } catch (e) {
-        console.error(e)
+        return await studentSchema.find()
+      } catch (error) {
+        throw new Error(
+          'Impossible de récupérer les étudiants, problème server.'
+        )
       }
     }
   }
