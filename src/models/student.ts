@@ -1,9 +1,16 @@
 import { Schema, model } from 'mongoose'
 import { IStudent } from '../type'
 
-const studentSchema = new Schema({
+const StudentSchema = new Schema({
   firstname: { type: String },
-  lastname: { type: String }
+  lastname: { type: String },
+  moods: [
+    {
+      note: Number,
+      comment: String,
+      created_at: { type: Date, required: true, default: Date.now }
+    }
+  ]
 })
 
-export default model<IStudent>('student', studentSchema)
+export default model<IStudent>('student', StudentSchema)
