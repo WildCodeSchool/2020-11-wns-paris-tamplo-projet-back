@@ -9,7 +9,7 @@ dotenv.config()
 
 // Connect to database
 mongoose
-  .connect(`mongodb://127.0.0.1:27017/${process.env.DB_DATABASE}`, {
+  .connect(`mongodb://mongodb:27017/${process.env.DB_DATABASE}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
