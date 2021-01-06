@@ -2,6 +2,13 @@ services:
   app:
     build: .
     ports:
-      - 8080:8080
+      - 4000:4000
+    env_file: 
+      - .env
   mongodb:
     image: mongo
+    volumes:
+      - tamplo-db:/data/db
+
+volumes:
+  tamplo-db:
