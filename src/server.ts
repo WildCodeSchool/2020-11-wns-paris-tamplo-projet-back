@@ -9,7 +9,7 @@ dotenv.config()
 
 // Connect to database
 mongoose
-  .connect(`mongodb://127.0.0.1:27017/${process.env.DB_DATABASE}`, {
+  .connect(`mongodb://mongodb:27017/${process.env.DB_DATABASE}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
@@ -23,7 +23,7 @@ const server = new ApolloServer({
   resolvers
 })
 
-const port = process.env.PORT || 4000
+const port = 4000
 
 server.listen({ port }).then(({ url }) => {
   console.log(`🚀  Server ready at ${url}`)

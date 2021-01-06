@@ -1,0 +1,17 @@
+services:
+  app:
+    build: .
+    ports:
+      - 4000:4000
+    env_file:
+      - .env
+    volumes:
+      - ./src:/app/src
+    container_name: server-tamplo
+  mongodb:
+    image: mongo
+    volumes:
+      - tamplo-db:/data/db
+
+volumes:
+  tamplo-db:
