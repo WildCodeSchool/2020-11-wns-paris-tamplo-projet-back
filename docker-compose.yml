@@ -1,6 +1,9 @@
+version: '2'
+
 services:
   app:
     build: .
+    image: tamplo_server
     ports:
       - 4000:4000
     env_file:
@@ -12,6 +15,7 @@ services:
     image: mongo
     volumes:
       - tamplo-db:/data/db
+    container_name: db-tamplo
 
 volumes:
   tamplo-db:
