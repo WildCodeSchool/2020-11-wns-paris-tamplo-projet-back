@@ -22,6 +22,7 @@
     "@types/cors": "^2.8.9",
     "@types/express": "^4.17.9",
     "@types/node": "^14.14.13",
+    "@typescript-eslint/eslint-plugin": "^4.12.0",
     "eslint": "^7.15.0",
     "eslint-config-airbnb-typescript": "^12.0.0",
     "eslint-config-prettier": "^7.0.0",
@@ -37,7 +38,9 @@
   "scripts": {
     "start": "npm run dev",
     "build": "tsc",
-    "lint": "eslint src/ --ext .js & echo 'lint complete'",
+    "lint": "eslint src/ & echo 'lint complete'",
+    "test": "npm run lint && npm run format",
+    "format": "prettier src/",
     "lintfix": "eslint --fix . ",
     "dev": "ts-node-dev --transpile-only --respawn  ./src/server.ts",
     "prod": "tsc && node ./built/src/server.js",
