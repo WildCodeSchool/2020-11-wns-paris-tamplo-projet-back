@@ -7,24 +7,28 @@ import schema from './graphql/schema/students'
 
 dotenv.config()
 
-// Connect to database
-mongoose
-  .connect(`mongodb://mongodb:27017/${process.env.DB_DATABASE}`, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    autoIndex: true
+const startServer = async () => {
+  const server = new ApolloServer({
+    typeDefs: schema,
+    resolvers
   })
-  .then(() => console.log('Connected to database'))
-  .catch((err) => console.log(err))
 
-const server = new ApolloServer({
-  typeDefs: schema,
-  resolvers
-})
+  await mongoose
+    .connect(
+      `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_DATABASE}?retryWrites=true&w=majority`,
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+        autoIndex: true
+      }
+    )
+    .then(() => console.log('Connected to database'))
+    .catch((err) => console.log(err))
 
-const port = 4000
+  server.listen({ port: 4000 }).then(({ url }) => {
+    console.log(`🚀 Server ready at ${url}`)
+  })
+}
 
-server.listen({ port }).then(({ url }) => {
-  console.log(`🚀  Server ready at ${url}`)
-})
+startServer()
