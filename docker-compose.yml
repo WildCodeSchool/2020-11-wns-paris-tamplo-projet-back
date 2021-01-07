@@ -11,11 +11,3 @@ services:
     volumes:
       - ./src:/app/src
     container_name: server-tamplo
-  mongodb:
-    image: mongo
-    volumes:
-      - tamplo-db:/data/db
-    container_name: db-tamplo
-
-volumes:
-  tamplo-db:

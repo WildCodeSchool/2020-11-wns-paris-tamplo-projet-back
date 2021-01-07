@@ -14,12 +14,15 @@ const startServer = async () => {
   })
 
   await mongoose
-    .connect(`mongodb://mongodb:27017/${process.env.DB_DATABASE}`, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-      autoIndex: true
-    })
+    .connect(
+      `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_DATABASE}?retryWrites=true&w=majority`,
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+        autoIndex: true
+      }
+    )
     .then(() => console.log('Connected to database'))
     .catch((err) => console.log(err))
 
