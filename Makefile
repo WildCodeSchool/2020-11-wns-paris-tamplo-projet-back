@@ -11,6 +11,10 @@ build:
 up:
 	docker-compose -f docker-compose.yml up -d;
 
+# Force build + up
+buildup:
+	docker-compose -f docker-compose.yml up -d --build;
+
 # Stop and remove containers, networks, images, and volumes
 down:
 	docker-compose -f docker-compose.yml down;
