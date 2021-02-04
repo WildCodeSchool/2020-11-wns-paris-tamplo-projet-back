@@ -1,5 +1,6 @@
 import StudentSchema from '../../models/student'
-import { IStudent } from '../../type'
+import QuizSchema from '../../models/quiz'
+import { IStudent, IQuiz, IQuestion, IResponse } from '../../type'
 
 const resolvers = {
   Query: {
@@ -19,6 +20,7 @@ const resolvers = {
         const student = await StudentSchema.findOne({ _id: args.id })
         student?.moods.push(args.mood)
         student?.save()
+        console.log('comment', args)
         return student
       } catch (error) {
         throw new Error("Impossible d'ajouter un mood.")
@@ -35,6 +37,31 @@ const resolvers = {
       } catch (error) {
         console.error(error)
         throw new Error("Impossible d'ajouter un étudiant.")
+      }
+    },
+    createQuiz: async (_: any, args: any): Promise<IQuiz> => {
+      console.log('args.questions.responses', args.questions)
+      try {
+        const quiz = new QuizSchema({
+          title: args.quiz.title,
+          comment: args.quiz.comment,
+          questions: args.quiz.questions.map((quest: IQuestion) => {
+            return {
+              question: quest.question,
+              responses: quest.responses.map((res: IResponse) => {
+                return {
+                  response: res.response,
+                  isCorrect: res.isCorrect
+                }
+              })
+            }
+          })
+        })
+        await quiz.save()
+        return quiz
+      } catch (error) {
+        console.error(error)
+        throw new Error("Impossible d'ajouter un quiz.")
       }
     }
   }
