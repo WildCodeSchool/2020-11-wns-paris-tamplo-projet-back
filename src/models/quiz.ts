@@ -1,12 +1,6 @@
 import { Schema, model } from 'mongoose'
 import { IQuiz } from '../type'
-
-const currentDate = () => {
-  const today = new Date()
-  return new Date(
-    Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate())
-  ).toISOString()
-}
+import currentDate from '../helpers/utils'
 
 const QuizSchema = new Schema({
   title: { type: String, required: true },

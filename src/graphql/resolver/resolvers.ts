@@ -20,7 +20,6 @@ const resolvers = {
         const student = await StudentSchema.findOne({ _id: args.id })
         student?.moods.push(args.mood)
         student?.save()
-        console.log('comment', args)
         return student
       } catch (error) {
         throw new Error("Impossible d'ajouter un mood.")
@@ -61,7 +60,7 @@ const resolvers = {
         return quiz
       } catch (error) {
         console.error(error)
-        throw new Error("Impossible d'ajouter un quiz.")
+        throw new Error("Impossible d'ajouter un quiz, essayez plus tard.")
       }
     }
   }
