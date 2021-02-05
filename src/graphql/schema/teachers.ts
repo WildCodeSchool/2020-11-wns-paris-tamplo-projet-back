@@ -1,6 +1,10 @@
 import { gql } from 'apollo-server-express'
 
 const typeDefsTeachers = gql`
+  extend type Query {
+    quizzes: [Quiz]
+  }
+
   type Quiz {
     id: String
     title: String
@@ -10,7 +14,6 @@ const typeDefsTeachers = gql`
   }
 
   type Questions {
-    idQuiz: String
     question: String
     responses: [Responses]
   }
