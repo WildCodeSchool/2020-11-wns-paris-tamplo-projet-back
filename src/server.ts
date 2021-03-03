@@ -3,13 +3,14 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import resolvers from './graphql/resolver/resolvers'
 
-import schema from './graphql/schema/students'
+import typeDefsStudent from './graphql/schema/students'
+import typeDefsTeachers from './graphql/schema/teachers'
 
 dotenv.config()
 
 const startServer = async () => {
   const server = new ApolloServer({
-    typeDefs: schema,
+    typeDefs: [typeDefsStudent, typeDefsTeachers],
     resolvers
   })
 

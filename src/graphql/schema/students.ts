@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server-express'
 
-const typeDefs = gql`
+const typeDefsStudents = gql`
   type Query {
     students: [Student]
   }
@@ -30,4 +30,4 @@ const typeDefs = gql`
   }
 `
 
-export { typeDefs as default }
+export { typeDefsStudents as default }

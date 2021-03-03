@@ -1,12 +1,6 @@
 import { Schema, model } from 'mongoose'
 import { IStudent } from '../type'
-
-const currentDate = () => {
-  const today = new Date()
-  return new Date(
-    Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate())
-  ).toISOString()
-}
+import currentDate from '../helpers/utils'
 
 const StudentSchema = new Schema({
   firstname: { type: String, required: true },
