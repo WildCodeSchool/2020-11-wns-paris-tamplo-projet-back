@@ -12,6 +12,13 @@ const resolvers = {
           'Impossible de récupérer les étudiants, problème server.'
         )
       }
+    },
+    quizzes: async (): Promise<IQuiz[]> => {
+      try {
+        return await QuizSchema.find()
+      } catch (error) {
+        throw new Error('Impossible de récupérer les quizzes, problème server.')
+      }
     }
   },
   Mutation: {
