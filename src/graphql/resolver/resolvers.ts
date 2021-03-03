@@ -39,7 +39,6 @@ const resolvers = {
       }
     },
     createQuiz: async (_: any, args: any): Promise<IQuiz> => {
-      console.log('args.questions.responses', args.questions)
       try {
         const quiz = new QuizSchema({
           title: args.quiz.title,
@@ -61,6 +60,27 @@ const resolvers = {
       } catch (error) {
         console.error(error)
         throw new Error("Impossible d'ajouter un quiz, essayez plus tard.")
+      }
+    },
+    updateQuiz: async (_: any, args: any): Promise<IQuiz | null> => {
+      try {
+        const quiz = await QuizSchema.findByIdAndUpdate(
+          { _id: args.id },
+          args.quiz
+        )
+        return quiz
+      } catch (error) {
+        console.error(error)
+        throw new Error("Impossible de modifier ce quiz pour l'instant.")
+      }
+    },
+    deleteQuiz: async (_: any, args: any): Promise<IQuiz | null> => {
+      try {
+        const quiz = await QuizSchema.deleteOne({ _id: args.id })
+        return quiz.n
+      } catch (error) {
+        console.error(error)
+        throw new Error("Impossible de supprimer ce quiz pour l'instant.")
       }
     }
   }

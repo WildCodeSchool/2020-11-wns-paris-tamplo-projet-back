@@ -40,6 +40,7 @@ const typeDefsTeachers = gql`
   extend type Mutation {
     createQuiz(quiz: inputQuiz): Quiz
     updateQuiz(id: String, quiz: inputQuiz): Quiz
+    deleteQuiz(id: String): Int
   }
 `
 
