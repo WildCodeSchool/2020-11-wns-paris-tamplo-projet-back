@@ -14,11 +14,13 @@ const typeDefsTeachers = gql`
   }
 
   type Questions {
+    id: String
     question: String
     responses: [Responses]
   }
 
   type Responses {
+    id: String
     response: String
     isCorrect: Boolean
   }
