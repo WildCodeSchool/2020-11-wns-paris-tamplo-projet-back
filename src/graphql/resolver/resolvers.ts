@@ -1,12 +1,12 @@
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 import QuizSchema from '../../models/quiz'
 import StudentSchema from '../../models/student'
 import UserSchema from '../../models/user'
 
-import { IStudent, IQuiz, IQuestion, IResponse, User } from '../../type'
+import { IStudent, IQuiz, IQuestion, IResponse, IUser } from '../../type'
 
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
-const { APP_SECRET, getUserId } = require('../../utils')
+import { APP_SECRET } from '../../utils'
 
 const resolvers = {
   Query: {
@@ -96,16 +96,13 @@ const resolvers = {
         throw new Error("Impossible de supprimer ce quiz pour l'instant.")
       }
     },
-    signup: async (parent, args, context, info) => {
-      const password = await bcrypt.hash(args.password, 10)
+    signup: async (_: any, args: any) => {
+      const password = await bcrypt.hash(args.user.password, 10)
       try {
         const user = new UserSchema({
-          firstname: args.firstname, // ...args
-          lastname: args.lastname,
-          email: args.email,
+          ...args.user,
           password
         })
-
         await user.save()
         const token = jwt.sign({ userId: user.id }, APP_SECRET, {
           expiresIn: '1d'
@@ -119,12 +116,11 @@ const resolvers = {
         throw new Error("Impossible d'ajouter un étudiant.")
       }
     },
-    login: async (parent, args, context, info) => {
+    login: async (_: any, args: any) => {
       const user = await UserSchema.findOne({ email: args.user.email })
       if (!user) {
         throw new Error('No such user found')
       }
-      console.log(user)
       const valid = await bcrypt.compare(args.user.password, user.password)
       if (!valid) {
         throw new Error('Invalid password')

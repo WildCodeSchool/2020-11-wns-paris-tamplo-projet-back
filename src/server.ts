@@ -7,7 +7,7 @@ import typeDefsStudent from './graphql/schema/students'
 import typeDefsTeachers from './graphql/schema/teachers'
 import typeDefsUser from './graphql/schema/users'
 
-const { getUserId } = require('./utils')
+// const { getUserId } = require('./utils')
 
 dotenv.config()
 
