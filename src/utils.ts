@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-export const JWT_SECRET = process.env.JWT_SECRET
+export const JWT_SECRET = process.env.JWT_SECRET as string
 
 export const getTokenPayload = (token: any): any => {
   return jwt.verify(token, JWT_SECRET)
