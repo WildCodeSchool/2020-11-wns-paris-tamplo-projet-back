@@ -6,7 +6,7 @@ import UserSchema from '../../models/user'
 
 import { IStudent, IQuiz, IQuestion, IResponse, IUser } from '../../type'
 
-import { APP_SECRET } from '../../utils'
+import { JWT_SECRET } from '../../utils'
 
 const resolvers = {
   Query: {
@@ -104,7 +104,7 @@ const resolvers = {
           password
         })
         await user.save()
-        const token = jwt.sign({ userId: user.id }, APP_SECRET, {
+        const token = jwt.sign({ userId: user.id }, JWT_SECRET, {
           expiresIn: '1d'
         })
         return {
@@ -125,7 +125,7 @@ const resolvers = {
       if (!valid) {
         throw new Error('Invalid password')
       }
-      const token = jwt.sign({ userId: user.id }, APP_SECRET, {
+      const token = jwt.sign({ userId: user.id }, JWT_SECRET, {
         expiresIn: '1d'
       })
       return {

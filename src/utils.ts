@@ -1,9 +1,12 @@
 import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
 
-export const APP_SECRET = 'GraphQL-is-aw3some'
+dotenv.config()
+
+export const JWT_SECRET = process.env.JWT_SECRET
 
 export const getTokenPayload = (token: any): any => {
-  return jwt.verify(token, APP_SECRET)
+  return jwt.verify(token, JWT_SECRET)
 }
 
 // export const getUserId = (req: any, authToken: any) => {
