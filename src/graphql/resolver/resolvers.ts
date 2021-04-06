@@ -1,6 +1,12 @@
-import StudentSchema from '../../models/student'
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 import QuizSchema from '../../models/quiz'
-import { IStudent, IQuiz, IQuestion, IResponse } from '../../type'
+import StudentSchema from '../../models/student'
+import UserSchema from '../../models/user'
+
+import { IStudent, IQuiz, IQuestion, IResponse, IUser } from '../../type'
+
+import { JWT_SECRET } from '../../utils'
 
 const resolvers = {
   Query: {
@@ -88,6 +94,43 @@ const resolvers = {
       } catch (error) {
         console.error(error)
         throw new Error("Impossible de supprimer ce quiz pour l'instant.")
+      }
+    },
+    signup: async (_: any, args: any) => {
+      const password = await bcrypt.hash(args.user.password, 10)
+      try {
+        const user = new UserSchema({
+          ...args.user,
+          password
+        })
+        await user.save()
+        const token = jwt.sign({ userId: user.id }, JWT_SECRET, {
+          expiresIn: '1d'
+        })
+        return {
+          token,
+          user
+        }
+      } catch (error) {
+        console.error(error)
+        throw new Error("Impossible d'ajouter un étudiant.")
+      }
+    },
+    login: async (_: any, args: any) => {
+      const user = await UserSchema.findOne({ email: args.user.email })
+      if (!user) {
+        throw new Error('No such user found')
+      }
+      const valid = await bcrypt.compare(args.user.password, user.password)
+      if (!valid) {
+        throw new Error('Invalid password')
+      }
+      const token = jwt.sign({ userId: user.id }, JWT_SECRET, {
+        expiresIn: '1d'
+      })
+      return {
+        token,
+        user
       }
     }
   }
