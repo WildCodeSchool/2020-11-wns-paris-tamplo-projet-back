@@ -1,18 +1,17 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import QuizSchema from '../../models/quiz'
-import StudentSchema from '../../models/student'
 import UserSchema from '../../models/user'
 
-import { IStudent, IQuiz, IQuestion, IResponse } from '../../type'
+import { IQuiz, IQuestion, IResponse, IUser } from '../../type'
 
 import { JWT_SECRET } from '../../utils'
 
 const resolvers = {
   Query: {
-    students: async (): Promise<IStudent[]> => {
+    users: async (): Promise<IUser[]> => {
       try {
-        return await StudentSchema.find()
+        return await UserSchema.find()
       } catch (error) {
         throw new Error(
           'Impossible de récupérer les étudiants, problème server.'
@@ -26,13 +25,13 @@ const resolvers = {
         throw new Error('Impossible de récupérer les quizzes, problème server.')
       }
     },
-    myInformations: async (_: any, args: any): Promise<IStudent> => {
+    myInformations: async (_: any, args: any): Promise<IUser> => {
       try {
-        const student = await StudentSchema.findOne({ _id: args.id })
-        if (!student) {
+        const user = await UserSchema.findOne({ _id: args.id })
+        if (!user) {
           throw new Error("Cette personne n'existe pas")
         }
-        return student
+        return user
       } catch (error) {
         throw new Error(
           'Impossible de récupérer les infos personnelles, problème server.'
@@ -41,38 +40,25 @@ const resolvers = {
     }
   },
   Mutation: {
-    updateMoodStudent: async (_: any, args: any): Promise<IStudent | null> => {
+    updateMoodStudent: async (_: any, args: any): Promise<IUser | null> => {
       try {
-        const student = await StudentSchema.findOne({ _id: args.id })
-        student?.moods.push(args.mood)
-        student?.save()
-        return student
+        const user = await UserSchema.findOne({ _id: args.id })
+        user?.moods.push(args.mood)
+        user?.save()
+        return user
       } catch (error) {
         throw new Error("Impossible d'ajouter un mood.")
       }
     },
-    createStudent: async (_: any, args: any): Promise<IStudent> => {
-      try {
-        const student = new StudentSchema({
-          firstname: args.firstname,
-          lastname: args.lastname
-        })
-        await student.save()
-        return student
-      } catch (error) {
-        console.error(error)
-        throw new Error("Impossible d'ajouter un étudiant.")
-      }
-    },
     createResponsesToQuizzes: async (_: any, args: any): Promise<boolean> => {
       try {
-        const student = await StudentSchema.findOne({ _id: args.id })
+        const user = await UserSchema.findOne({ _id: args.id })
         const info = {
           id_quiz: args.responses.id_quiz,
           note: args.responses.note
         }
-        student?.responsesToQuizzes.push(info)
-        student?.save()
+        user?.responsesToQuizzes.push(info)
+        user?.save()
         return true
       } catch (error) {
         throw new Error("Impossible d'ajouter une note à ce quiz.")

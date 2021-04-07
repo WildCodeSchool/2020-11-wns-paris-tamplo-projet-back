@@ -3,8 +3,7 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import resolvers from './graphql/resolver/resolvers'
 
-import typeDefsStudent from './graphql/schema/students'
-import typeDefsTeachers from './graphql/schema/teachers'
+import typeDefsQuizzes from './graphql/schema/quizzes'
 import typeDefsUser from './graphql/schema/users'
 
 // const { getUserId } = require('./utils')
@@ -13,7 +12,7 @@ dotenv.config()
 
 const startServer = async () => {
   const server = new ApolloServer({
-    typeDefs: [typeDefsStudent, typeDefsTeachers, typeDefsUser],
+    typeDefs: [typeDefsQuizzes, typeDefsUser],
     resolvers
     // context: ({ req }) => {
     //   // Get the user token from the headers.

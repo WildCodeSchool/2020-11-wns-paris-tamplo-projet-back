@@ -35,9 +35,7 @@ export interface IUser extends Document {
   lastname: string
   email: string
   password: string
-}
-
-export interface IStudent extends IUser {
+  status: 'STUDENT' | 'TEACHER'
   moods: IMood[]
   responsesToQuizzes: IResponsesToQuiz[]
 }
