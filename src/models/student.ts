@@ -11,6 +11,12 @@ const StudentSchema = new Schema({
       comment: String,
       created_at: { type: String, required: true, default: currentDate }
     }
+  ],
+  responsesToQuizzes: [
+    {
+      id_quiz: String,
+      note: Number
+    }
   ]
 })
 

@@ -4,7 +4,7 @@ import QuizSchema from '../../models/quiz'
 import StudentSchema from '../../models/student'
 import UserSchema from '../../models/user'
 
-import { IStudent, IQuiz, IQuestion, IResponse, IUser } from '../../type'
+import { IStudent, IQuiz, IQuestion, IResponse } from '../../type'
 
 import { JWT_SECRET } from '../../utils'
 
@@ -24,6 +24,19 @@ const resolvers = {
         return await QuizSchema.find()
       } catch (error) {
         throw new Error('Impossible de récupérer les quizzes, problème server.')
+      }
+    },
+    myInformations: async (_: any, args: any): Promise<IStudent> => {
+      try {
+        const student = await StudentSchema.findOne({ _id: args.id })
+        if (!student) {
+          throw new Error("Cette personne n'existe pas")
+        }
+        return student
+      } catch (error) {
+        throw new Error(
+          'Impossible de récupérer les infos personnelles, problème server.'
+        )
       }
     }
   },
@@ -49,6 +62,20 @@ const resolvers = {
       } catch (error) {
         console.error(error)
         throw new Error("Impossible d'ajouter un étudiant.")
+      }
+    },
+    createResponsesToQuizzes: async (_: any, args: any): Promise<boolean> => {
+      try {
+        const student = await StudentSchema.findOne({ _id: args.id })
+        const info = {
+          id_quiz: args.responses.id_quiz,
+          note: args.responses.note
+        }
+        student?.responsesToQuizzes.push(info)
+        student?.save()
+        return true
+      } catch (error) {
+        throw new Error("Impossible d'ajouter une note à ce quiz.")
       }
     },
     createQuiz: async (_: any, args: any): Promise<IQuiz> => {
