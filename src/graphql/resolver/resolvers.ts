@@ -1,9 +1,11 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import QuizSchema from '../../models/quiz'
 import UserSchema from '../../models/user'
 
-import { IQuiz, IQuestion, IResponse, IUser } from '../../type'
+import { getQuizzes, addQuiz, updateExistingQuiz, deleteOneQuiz } from './utilsQuiz'
+import { answerToQuiz } from './utilsUser'
+
+import { IQuiz, IUser } from '../../type'
 
 import { JWT_SECRET } from '../../utils'
 
@@ -18,13 +20,7 @@ const resolvers = {
         )
       }
     },
-    quizzes: async (): Promise<IQuiz[]> => {
-      try {
-        return await QuizSchema.find()
-      } catch (error) {
-        throw new Error('Impossible de récupérer les quizzes, problème server.')
-      }
-    },
+    quizzes: async (): Promise<IQuiz[]> => await getQuizzes(),
     myInformations: async (_: any, args: any): Promise<IUser> => {
       try {
         const user = await UserSchema.findOne({ _id: args.id })
@@ -50,65 +46,10 @@ const resolvers = {
         throw new Error("Impossible d'ajouter un mood.")
       }
     },
-    createResponsesToQuizzes: async (_: any, args: any): Promise<boolean> => {
-      try {
-        const user = await UserSchema.findOne({ _id: args.id })
-        const info = {
-          id_quiz: args.responses.id_quiz,
-          note: args.responses.note
-        }
-        user?.responsesToQuizzes.push(info)
-        user?.save()
-        return true
-      } catch (error) {
-        throw new Error("Impossible d'ajouter une note à ce quiz.")
-      }
-    },
-    createQuiz: async (_: any, args: any): Promise<IQuiz> => {
-      try {
-        const quiz = new QuizSchema({
-          title: args.quiz.title,
-          comment: args.quiz.comment,
-          questions: args.quiz.questions.map((quest: IQuestion) => {
-            return {
-              question: quest.question,
-              responses: quest.responses.map((res: IResponse) => {
-                return {
-                  response: res.response,
-                  isCorrect: res.isCorrect
-                }
-              })
-            }
-          })
-        })
-        await quiz.save()
-        return quiz
-      } catch (error) {
-        console.error(error)
-        throw new Error("Impossible d'ajouter un quiz, essayez plus tard.")
-      }
-    },
-    updateQuiz: async (_: any, args: any): Promise<IQuiz | null> => {
-      try {
-        const quiz = await QuizSchema.findByIdAndUpdate(
-          { _id: args.id },
-          args.quiz
-        )
-        return quiz
-      } catch (error) {
-        console.error(error)
-        throw new Error("Impossible de modifier ce quiz pour l'instant.")
-      }
-    },
-    deleteQuiz: async (_: any, args: any): Promise<IQuiz | null> => {
-      try {
-        const quiz = await QuizSchema.deleteOne({ _id: args.id })
-        return quiz.n
-      } catch (error) {
-        console.error(error)
-        throw new Error("Impossible de supprimer ce quiz pour l'instant.")
-      }
-    },
+    createResponsesToQuizzes: async (_: any, args: any): Promise<boolean> => await answerToQuiz(_, args),
+    createQuiz: async (_: any, args: any): Promise<IQuiz> => await addQuiz(_, args),
+    updateQuiz: async (_: any, args: any): Promise<IQuiz | null> => updateExistingQuiz(_, args),
+    deleteQuiz: async (_: any, args: any): Promise<IQuiz | null> => deleteOneQuiz(_, args),
     signup: async (_: any, args: any) => {
       const password = await bcrypt.hash(args.user.password, 10)
       try {
