@@ -15,8 +15,6 @@ const startServer = async () => {
     typeDefs: [typeDefsQuizzes, typeDefsUser],
     resolvers,
     context: ({ req }) => {
-      // const { parse } = require('graphql');
-      // console.log('name', parse(req.body.query).definitions[0].selectionSet.selections[0].name.value);
       const { operationName } = req.body
 
       if (operationName === 'login') {

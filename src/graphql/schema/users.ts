@@ -43,11 +43,6 @@ const typeDefsUser = gql`
     note: Int
   }
 
-  type SignUpResponse {
-    success: Boolean
-    message: String
-  }
-
   input inputSignUp {
     firstname: String!
     lastname: String!
