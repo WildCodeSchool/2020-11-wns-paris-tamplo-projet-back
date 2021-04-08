@@ -37,7 +37,11 @@ export const addQuiz = async (_: any, args: any): Promise<IQuiz> => {
 
 export const updateExistingQuiz = async (_: any, args: any): Promise<IQuiz> => {
   try {
-    const quiz = await QuizSchema.findByIdAndUpdate({ _id: args.id }, args.quiz)
+    const quiz = await QuizSchema.findByIdAndUpdate(
+      { _id: args.id },
+      args.quiz,
+      { new: true }
+    )
     if (!quiz) {
       throw new Error("Ce quiz n'existe pas !")
     }

@@ -16,7 +16,11 @@ import {
   modifyOneUser,
   deleteOneUser
 } from './utilsUser'
-import { getRessources, addRessource } from './utilsRessources'
+import {
+  getRessources,
+  addRessource,
+  updateExistingRessource
+} from './utilsRessources'
 
 // Types
 import { IQuiz } from '../../types/quizzType'
@@ -61,7 +65,9 @@ const resolvers = {
 
     // Ressource
     createRessource: async (_: any, args: any): Promise<IRessource> =>
-      addRessource(_, args)
+      addRessource(_, args),
+    updateRessource: async (_: any, args: any): Promise<IRessource> =>
+      updateExistingRessource(_, args)
   }
 }
 export default resolvers

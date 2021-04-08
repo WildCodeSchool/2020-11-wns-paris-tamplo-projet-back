@@ -22,6 +22,7 @@ const typeDefsRessources = gql`
 
   extend type Mutation {
     createRessource(ressource: inputRessource): Ressource
+    updateRessource(id: String, ressource: inputRessource): Ressource
   }
 `
 

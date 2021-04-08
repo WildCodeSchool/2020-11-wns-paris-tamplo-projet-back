@@ -6,6 +6,7 @@ export const getRessources = async (): Promise<IRessource[]> => {
   try {
     return await RessourceSchema.find()
   } catch (error) {
+    console.error(error)
     throw new Error('Impossible de récupérer les ressources, problème server.')
   }
 }
@@ -23,5 +24,25 @@ export const addRessource = async (_: any, args: any): Promise<IRessource> => {
   } catch (error) {
     console.error(error)
     throw new Error("Impossible d'ajouter une ressource, essayez plus tard.")
+  }
+}
+
+export const updateExistingRessource = async (
+  _: any,
+  args: any
+): Promise<IRessource> => {
+  try {
+    const ressource = await RessourceSchema.findByIdAndUpdate(
+      { _id: args.id },
+      args.ressource,
+      { new: true }
+    )
+    if (!ressource) {
+      throw new Error("Cette référence n'existe pas")
+    }
+    return ressource
+  } catch (error) {
+    console.error(error)
+    throw new Error("Impossible de modifier cette ressource pour l'instant.")
   }
 }
