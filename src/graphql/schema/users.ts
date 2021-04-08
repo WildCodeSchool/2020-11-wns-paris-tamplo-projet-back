@@ -8,6 +8,7 @@ const typeDefsUser = gql`
 
   type Query {
     users: [User]
+    getOneUser(id: ID!): User
     myInformations(id: ID!): User
   }
 
@@ -72,6 +73,8 @@ const typeDefsUser = gql`
     login(userCredentials: userCredentials): AuthPayload
     updateMoodStudent(id: String, mood: inputMood): User
     createResponsesToQuizzes(id: ID, responses: inputResponsesToQuiz): Boolean
+    updateOneUser(id: String, user: inputSignUp): User
+    deleteUser(id: String): Int
   }
 `
 

@@ -1,8 +1,8 @@
 import QuizSchema from '../../models/quiz'
 
-import { IQuestion, IResponse } from '../../type'
+import { IQuestion, IResponse, IQuiz } from '../../type'
 
-export const getQuizzes = async () => {
+export const getQuizzes = async (): Promise<IQuiz[]> => {
   try {
     return await QuizSchema.find()
   } catch (error) {
@@ -10,7 +10,7 @@ export const getQuizzes = async () => {
   }
 }
 
-export const addQuiz = async (_: any, args: any) => {
+export const addQuiz = async (_: any, args: any): Promise<IQuiz> => {
   try {
     const quiz = await new QuizSchema({
       title: args.quiz.title,
@@ -35,9 +35,12 @@ export const addQuiz = async (_: any, args: any) => {
   }
 }
 
-export const updateExistingQuiz = async (_: any, args: any) => {
+export const updateExistingQuiz = async (_: any, args: any): Promise<IQuiz> => {
   try {
     const quiz = await QuizSchema.findByIdAndUpdate({ _id: args.id }, args.quiz)
+    if (!quiz) {
+      throw new Error("Ce quiz n'existe pas !")
+    }
     return quiz
   } catch (error) {
     console.error(error)
@@ -45,9 +48,12 @@ export const updateExistingQuiz = async (_: any, args: any) => {
   }
 }
 
-export const deleteOneQuiz = async (_: any, args: any) => {
+export const deleteOneQuiz = async (_: any, args: any): Promise<IQuiz> => {
   try {
     const quiz = await QuizSchema.deleteOne({ _id: args.id })
+    if (!quiz) {
+      throw new Error("Ce quiz n'existe pas !")
+    }
     return quiz.n
   } catch (error) {
     console.error(error)
