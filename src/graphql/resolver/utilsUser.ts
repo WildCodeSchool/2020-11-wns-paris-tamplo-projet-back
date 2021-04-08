@@ -8,9 +8,11 @@ import {
 } from '../../type'
 import UserSchema from '../../models/user'
 
+import { IQuiz, IUser } from '../../type'
+
 import { JWT_SECRET } from '../../utils'
 
-export const answerToQuiz = async (_: any, args: any) => {
+export const answerToQuiz = async (_: any, args: any): Promise<boolean> => {
   try {
     const user = await UserSchema.findOne({ _id: args.id })
     const info = {
@@ -25,7 +27,7 @@ export const answerToQuiz = async (_: any, args: any) => {
   }
 }
 
-export const getUsers = async () => {
+export const getUsers = async (): Promise<IUser[]> => {
   try {
     return await UserSchema.find()
   } catch (error) {
@@ -33,7 +35,7 @@ export const getUsers = async () => {
   }
 }
 
-export const getMyInfos = async (_: any, args: any) => {
+export const getMyInfos = async (_: any, args: any): Promise<IUser> => {
   try {
     const user = await UserSchema.findOne({ _id: args.id })
     if (!user) {
@@ -47,11 +49,14 @@ export const getMyInfos = async (_: any, args: any) => {
   }
 }
 
-export const updateMood = async (_: any, args: any) => {
+export const updateMood = async (_: any, args: any): Promise<IUser> => {
   try {
     const user = await UserSchema.findOne({ _id: args.id })
-    user?.moods.push(args.mood)
-    user?.save()
+    if (!user) {
+      throw new Error("Cette personne n'existe pas")
+    }
+    user.moods.push(args.mood)
+    user.save()
     return user
   } catch (error) {
     throw new Error("Impossible d'ajouter un mood.")
@@ -99,5 +104,17 @@ export const connection = async (
   return {
     token,
     user
+  }
+}
+
+export const oneUser = async (_: any, args: any): Promise<IUser> => {
+  try {
+    const user = await UserSchema.findOne({ _id: args.id })
+    if (!user) {
+      throw new Error("Cet utilisateur n'existe pas")
+    }
+    return user
+  } catch (error) {
+    throw new Error('Impossible de retrouver cet utilisateur !')
   }
 }

@@ -10,7 +10,8 @@ import {
   getMyInfos,
   updateMood,
   registration,
-  connection
+  connection,
+  oneUser
 } from './utilsUser'
 
 import { IAuthPayload, IQuiz, IResponseStatus, IUser } from '../../type'
@@ -18,6 +19,7 @@ import { IAuthPayload, IQuiz, IResponseStatus, IUser } from '../../type'
 const resolvers = {
   Query: {
     users: async (): Promise<IUser[]> => getUsers(),
+    getOneUser: async (_: any, args: any): Promise<IUser> => oneUser(_, args),
     quizzes: async (): Promise<IQuiz[]> => getQuizzes(),
     myInformations: async (_: any, args: any): Promise<IUser> =>
       getMyInfos(_, args)
