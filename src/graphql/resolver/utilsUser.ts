@@ -4,11 +4,11 @@ import {
   IAuthPayload,
   IResponseStatus,
   IUserCredentials,
-  IUserRegistration
+  IUserRegistration,
+  IUser
 } from '../../type'
-import UserSchema from '../../models/user'
 
-import { IQuiz, IUser } from '../../type'
+import UserSchema from '../../models/user'
 
 import { JWT_SECRET } from '../../utils'
 
