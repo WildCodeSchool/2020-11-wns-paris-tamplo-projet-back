@@ -35,12 +35,9 @@ export const addQuiz = async (_: any, args: any) => {
   }
 }
 
-export const updateExistingQuiz =  async (_: any, args: any) => {
+export const updateExistingQuiz = async (_: any, args: any) => {
   try {
-    const quiz = await QuizSchema.findByIdAndUpdate(
-      { _id: args.id },
-      args.quiz
-    )
+    const quiz = await QuizSchema.findByIdAndUpdate({ _id: args.id }, args.quiz)
     return quiz
   } catch (error) {
     console.error(error)

@@ -23,9 +23,7 @@ export const getUsers = async () => {
   try {
     return await UserSchema.find()
   } catch (error) {
-    throw new Error(
-      'Impossible de récupérer les étudiants, problème server.'
-    )
+    throw new Error('Impossible de récupérer les étudiants, problème server.')
   }
 }
 
@@ -56,23 +54,23 @@ export const updateMood = async (_: any, args: any) => {
 
 export const registration = async (_: any, args: any) => {
   const password = await bcrypt.hash(args.user.password, 10)
-      try {
-        const user = new UserSchema({
-          ...args.user,
-          password
-        })
-        await user.save()
-        const token = jwt.sign({ userId: user.id }, JWT_SECRET, {
-          expiresIn: '1d'
-        })
-        return {
-          token,
-          user
-        }
-      } catch (error) {
-        console.error(error)
-        throw new Error("Impossible d'ajouter un étudiant.")
-      }
+  try {
+    const user = new UserSchema({
+      ...args.user,
+      password
+    })
+    await user.save()
+    const token = jwt.sign({ userId: user.id }, JWT_SECRET, {
+      expiresIn: '1d'
+    })
+    return {
+      token,
+      user
+    }
+  } catch (error) {
+    console.error(error)
+    throw new Error("Impossible d'ajouter un étudiant.")
+  }
 }
 
 export const connection = async (_: any, args: any) => {
