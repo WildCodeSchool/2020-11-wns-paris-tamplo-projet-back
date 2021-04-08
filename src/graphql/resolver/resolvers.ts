@@ -36,11 +36,11 @@ const resolvers = {
     myInformations: async (_: any, args: any): Promise<IUser> =>
       getMyInfos(_, args),
 
-    //Quiz
+    // Quiz
     quizzes: async (): Promise<IQuiz[]> => getQuizzes(),
 
     // Ressource
-    ressources: async (): Promise<IRessource[]> => await getRessources()
+    ressources: async (): Promise<IRessource[]> => getRessources()
   },
   Mutation: {
     // User
