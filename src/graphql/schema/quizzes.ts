@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server-express'
 
-const typeDefsTeachers = gql`
+const typeDefsQuizzes = gql`
   extend type Query {
     quizzes: [Quiz]
   }
@@ -49,4 +49,4 @@ const typeDefsTeachers = gql`
   }
 `
 
-export { typeDefsTeachers as default }
+export { typeDefsQuizzes as default }

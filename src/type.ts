@@ -16,6 +16,11 @@ export interface IResponse {
   isCorrect: boolean
 }
 
+export interface IResponsesToQuiz {
+  id_quiz: string
+  note: number
+}
+
 export interface IQuiz extends Document {
   _id: string
   title: string
@@ -24,17 +29,13 @@ export interface IQuiz extends Document {
   questions: IQuestion[]
 }
 
-export interface IStudent extends Document {
-  _id: string
-  firstname: string
-  lastname: string
-  moods: IMood[]
-}
-
 export interface IUser extends Document {
   _id: string
   firstname: string
   lastname: string
   email: string
   password: string
+  status: 'STUDENT' | 'TEACHER'
+  moods: IMood[]
+  responsesToQuizzes: IResponsesToQuiz[]
 }
