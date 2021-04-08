@@ -17,8 +17,8 @@ const startServer = async () => {
     resolvers,
     context: ({ req }) => {
       const { operationName } = req.body
-
-      if (operationName === 'login') {
+      // IntrospectionQuery is to allow Audrey to use the GQL playground (at start without authorization)
+      if (operationName === 'login' || operationName === 'IntrospectionQuery') {
         return {}
       }
 

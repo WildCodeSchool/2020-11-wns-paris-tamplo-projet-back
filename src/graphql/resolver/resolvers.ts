@@ -33,8 +33,8 @@ const resolvers = {
     // User
     users: async (): Promise<IUser[]> => getUsers(),
     getOneUser: async (_: any, args: any): Promise<IUser> => oneUser(_, args),
-    myInformations: async (_: any, args: any): Promise<IUser> =>
-      getMyInfos(_, args),
+    myInformations: async (_: any, args: any, context: any): Promise<IUser> =>
+      getMyInfos(_, args, context),
 
     // Quiz
     quizzes: async (): Promise<IQuiz[]> => getQuizzes(),

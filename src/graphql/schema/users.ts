@@ -9,7 +9,7 @@ const typeDefsUser = gql`
   type Query {
     users: [User]
     getOneUser(id: ID!): User
-    myInformations(id: ID!): User
+    myInformations: User
   }
 
   type User {

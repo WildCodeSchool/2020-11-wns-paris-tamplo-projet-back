@@ -35,9 +35,13 @@ export const getUsers = async (): Promise<IUser[]> => {
   }
 }
 
-export const getMyInfos = async (_: any, args: any): Promise<IUser> => {
+export const getMyInfos = async (
+  _: any,
+  args: any,
+  context: any
+): Promise<IUser> => {
   try {
-    const user = await UserSchema.findOne({ _id: args.id })
+    const user = await UserSchema.findOne({ _id: context.user.id })
     if (!user) {
       throw new Error("Cette personne n'existe pas")
     }
