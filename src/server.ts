@@ -1,10 +1,9 @@
-import { ApolloServer, AuthenticationError } from 'apollo-server'
+import { ApolloServer } from 'apollo-server'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import resolvers from './graphql/resolver/resolvers'
 
-import typeDefsStudent from './graphql/schema/students'
-import typeDefsTeachers from './graphql/schema/teachers'
+import typeDefsQuizzes from './graphql/schema/quizzes'
 import typeDefsUser from './graphql/schema/users'
 
 import { getUserData } from './utils'
@@ -13,11 +12,11 @@ dotenv.config()
 
 const startServer = async () => {
   const server = new ApolloServer({
-    typeDefs: [typeDefsStudent, typeDefsTeachers, typeDefsUser],
+    typeDefs: [typeDefsQuizzes, typeDefsUser],
     resolvers,
     context: ({ req }) => {
       // const { parse } = require('graphql');
-      // console.log('name', obj.definitions[0].selectionSet.selections[0].name.value);
+      // console.log('name', parse(req.body.query).definitions[0].selectionSet.selections[0].name.value);
       const { operationName } = req.body
 
       if (operationName === 'login') {
@@ -25,11 +24,9 @@ const startServer = async () => {
       }
 
       // try to retrieve a user data from authorization in the header
-      const userData = getUserData(req)
-
-      // if (!userData) throw new AuthenticationError('you must be logged in')
-
-      return userData
+      // and store information (id, status) in the context
+      const user = getUserData(req)
+      return { user }
     }
   })
 

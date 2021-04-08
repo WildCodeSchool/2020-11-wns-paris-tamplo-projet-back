@@ -1,5 +1,15 @@
 import { Document } from 'mongoose'
 
+export interface IResponseStatus {
+  success: boolean
+  message: string
+}
+
+export interface IAuthPayload {
+  token: string
+  user: IUser
+}
+
 export interface IMood {
   note: number
   comment: string
@@ -16,6 +26,11 @@ export interface IResponse {
   isCorrect: boolean
 }
 
+export interface IResponsesToQuiz {
+  id_quiz: string
+  note: number
+}
+
 export interface IQuiz extends Document {
   _id: string
   title: string
@@ -24,18 +39,19 @@ export interface IQuiz extends Document {
   questions: IQuestion[]
 }
 
-export interface IStudent extends Document {
-  _id: string
-  firstname: string
-  lastname: string
-  moods: IMood[]
-}
-
-export interface IUser extends Document {
-  _id: string
-  firstname: string
-  lastname: string
+export interface IUserCredentials {
   email: string
   password: string
-  status: string
+}
+
+export interface IUserRegistration extends IUserCredentials {
+  firstname: string
+  lastname: string
+  status: 'STUDENT' | 'TEACHER'
+}
+
+export interface IUser extends IUserRegistration, Document {
+  _id: string
+  moods: IMood[]
+  responsesToQuizzes: IResponsesToQuiz[]
 }

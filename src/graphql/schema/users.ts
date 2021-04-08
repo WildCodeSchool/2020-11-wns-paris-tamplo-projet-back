@@ -1,14 +1,46 @@
 import { gql } from 'apollo-server-express'
 
 const typeDefsUser = gql`
+  enum Status {
+    TEACHER
+    STUDENT
+  }
+
+  type Query {
+    users: [User]
+    myInformations(id: ID!): User
+  }
+
+  type User {
+    id: ID!
+    firstname: String!
+    lastname: String!
+    email: String!
+    password: String!
+    status: Status
+    moods: [Mood]
+    responsesToQuizzes: [ResponsesToQuiz]
+  }
+
   type AuthPayload {
     token: String
     user: User
   }
-  type User {
-    id: ID!
-    name: String!
-    email: String!
+
+  type ResponseStatus {
+    success: Boolean
+    message: String
+  }
+
+  type Mood {
+    note: Int
+    comment: String
+    created_at: String
+  }
+
+  type ResponsesToQuiz {
+    id_quiz: String
+    note: Int
   }
 
   type SignUpResponse {
@@ -21,17 +53,30 @@ const typeDefsUser = gql`
     lastname: String!
     email: String!
     password: String!
-    status: String!
+    status: Status
   }
 
-  input inputLogin {
+  input userCredentials {
     email: String!
     password: String!
   }
 
-  extend type Mutation {
-    signup(user: inputSignUp): SignUpResponse
-    login(user: inputLogin): AuthPayload
+  input inputMood {
+    note: Int
+    comment: String
+    created_at: String
+  }
+
+  input inputResponsesToQuiz {
+    id_quiz: String!
+    note: Int!
+  }
+
+  type Mutation {
+    signup(user: inputSignUp): ResponseStatus
+    login(userCredentials: userCredentials): AuthPayload
+    updateMoodStudent(id: String, mood: inputMood): User
+    createResponsesToQuizzes(id: ID, responses: inputResponsesToQuiz): Boolean
   }
 `
 

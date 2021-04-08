@@ -23,5 +23,5 @@ export const getUserData = (req: any) => {
     throw new AuthenticationError('you must be logged in')
   }
   const { id, status } = getTokenPayload(token)
-  return { user: { id, status } }
+  return { id, status }
 }
