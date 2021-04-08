@@ -6,25 +6,26 @@ import resolvers from './graphql/resolver/resolvers'
 import typeDefsQuizzes from './graphql/schema/quizzes'
 import typeDefsUser from './graphql/schema/users'
 
-// const { getUserId } = require('./utils')
+import { getUserData } from './utils'
 
 dotenv.config()
 
 const startServer = async () => {
   const server = new ApolloServer({
     typeDefs: [typeDefsQuizzes, typeDefsUser],
-    resolvers
-    // context: ({ req }) => {
-    //   // Get the user token from the headers.
-    //   const token = req.headers.authorization || ''
-    //   // try to retrieve a user with the token
-    //   const user = getUserId(token) // getUserId dans la config acutelle
-    //   // optionally block the user
-    //   // we could also check user roles/permissions here
-    //   if (!user) throw new AuthenticationError('you must be logged in')
+    resolvers,
+    context: ({ req }) => {
+      const { operationName } = req.body
 
-    //   return { user }
-    // }
+      if (operationName === 'login') {
+        return {}
+      }
+
+      // try to retrieve a user data from authorization in the header
+      // and store information (id, status) in the context
+      const user = getUserData(req)
+      return { user }
+    }
   })
 
   await mongoose

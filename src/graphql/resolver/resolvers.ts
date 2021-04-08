@@ -13,7 +13,7 @@ import {
   connection
 } from './utilsUser'
 
-import { IQuiz, IUser } from '../../type'
+import { IAuthPayload, IQuiz, IResponseStatus, IUser } from '../../type'
 
 const resolvers = {
   Query: {
@@ -32,8 +32,10 @@ const resolvers = {
       updateExistingQuiz(_, args),
     deleteQuiz: async (_: any, args: any): Promise<IQuiz | null> =>
       deleteOneQuiz(_, args),
-    signup: async (_: any, args: any) => registration(_, args),
-    login: async (_: any, args: any) => connection(_, args)
+    signup: async (_: any, args: any): Promise<IResponseStatus> =>
+      registration(_, args),
+    login: async (_: any, args: any): Promise<IAuthPayload> =>
+      connection(_, args)
   }
 }
 export default resolvers

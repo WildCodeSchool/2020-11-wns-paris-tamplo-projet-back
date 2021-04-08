@@ -1,5 +1,11 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import {
+  IAuthPayload,
+  IResponseStatus,
+  IUserCredentials,
+  IUserRegistration
+} from '../../type'
 import UserSchema from '../../models/user'
 
 import { JWT_SECRET } from '../../utils'
@@ -52,20 +58,22 @@ export const updateMood = async (_: any, args: any) => {
   }
 }
 
-export const registration = async (_: any, args: any) => {
-  const password = await bcrypt.hash(args.user.password, 10)
+export const registration = async (
+  _: any,
+  { user }: { user: IUserRegistration }
+): Promise<IResponseStatus> => {
+  const password = await bcrypt.hash(user.password, 10)
   try {
-    const user = new UserSchema({
-      ...args.user,
+    const newUser = new UserSchema({
+      ...user,
       password
     })
-    await user.save()
-    const token = jwt.sign({ userId: user.id }, JWT_SECRET, {
-      expiresIn: '1d'
-    })
+    await newUser.save()
     return {
-      token,
-      user
+      success: true,
+      message: `${user.firstname} ${user.lastname} a été rajouté (${
+        user.status === 'STUDENT' ? 'Etudiant' : 'Formateur'
+      })`
     }
   } catch (error) {
     console.error(error)
@@ -73,16 +81,19 @@ export const registration = async (_: any, args: any) => {
   }
 }
 
-export const connection = async (_: any, args: any) => {
-  const user = await UserSchema.findOne({ email: args.user.email })
+export const connection = async (
+  _: any,
+  { userCredentials }: { userCredentials: IUserCredentials }
+): Promise<IAuthPayload> => {
+  const user = await UserSchema.findOne({ email: userCredentials.email })
   if (!user) {
     throw new Error('No such user found')
   }
-  const valid = await bcrypt.compare(args.user.password, user.password)
+  const valid = await bcrypt.compare(userCredentials.password, user.password)
   if (!valid) {
     throw new Error('Invalid password')
   }
-  const token = jwt.sign({ userId: user.id }, JWT_SECRET, {
+  const token = jwt.sign({ id: user.id, status: user.status }, JWT_SECRET, {
     expiresIn: '1d'
   })
   return {

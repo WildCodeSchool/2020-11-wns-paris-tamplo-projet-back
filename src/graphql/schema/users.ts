@@ -27,6 +27,11 @@ const typeDefsUser = gql`
     user: User
   }
 
+  type ResponseStatus {
+    success: Boolean
+    message: String
+  }
+
   type Mood {
     note: Int
     comment: String
@@ -46,7 +51,7 @@ const typeDefsUser = gql`
     status: Status
   }
 
-  input inputLogin {
+  input userCredentials {
     email: String!
     password: String!
   }
@@ -63,8 +68,8 @@ const typeDefsUser = gql`
   }
 
   type Mutation {
-    signup(user: inputSignUp): AuthPayload
-    login(user: inputLogin): AuthPayload
+    signup(user: inputSignUp): ResponseStatus
+    login(userCredentials: userCredentials): AuthPayload
     updateMoodStudent(id: String, mood: inputMood): User
     createResponsesToQuizzes(id: ID, responses: inputResponsesToQuiz): Boolean
   }
