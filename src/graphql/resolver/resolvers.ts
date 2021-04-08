@@ -1,3 +1,4 @@
+// Utils Resolver
 import {
   getQuizzes,
   addQuiz,
@@ -15,27 +16,30 @@ import {
   modifyOneUser,
   deleteOneUser
 } from './utilsUser'
+import { addRessource } from './utilsRessources'
 
-import { IAuthPayload, IQuiz, IResponseStatus, IUser } from '../../type'
+// Types
+import { IQuiz } from '../../types/quizzType'
+import { IUser, IAuthPayload, IResponseStatus } from '../../types/userType'
+import { IRessource } from '../../types/ressourceType'
 
 const resolvers = {
   Query: {
+    // User
     users: async (): Promise<IUser[]> => getUsers(),
     getOneUser: async (_: any, args: any): Promise<IUser> => oneUser(_, args),
-    quizzes: async (): Promise<IQuiz[]> => getQuizzes(),
     myInformations: async (_: any, args: any): Promise<IUser> =>
-      getMyInfos(_, args)
+      getMyInfos(_, args),
+
+    //Quiz
+    quizzes: async (): Promise<IQuiz[]> => getQuizzes()
   },
   Mutation: {
+    // User
     updateMoodStudent: async (_: any, args: any): Promise<IUser | null> =>
       updateMood(_, args),
     createResponsesToQuizzes: async (_: any, args: any): Promise<boolean> =>
       answerToQuiz(_, args),
-    createQuiz: async (_: any, args: any): Promise<IQuiz> => addQuiz(_, args),
-    updateQuiz: async (_: any, args: any): Promise<IQuiz> =>
-      updateExistingQuiz(_, args),
-    deleteQuiz: async (_: any, args: any): Promise<IQuiz> =>
-      deleteOneQuiz(_, args),
     signup: async (_: any, args: any): Promise<IResponseStatus> =>
       registration(_, args),
     login: async (_: any, args: any): Promise<IAuthPayload> =>
@@ -43,7 +47,18 @@ const resolvers = {
     updateOneUser: async (_: any, args: any): Promise<IUser> =>
       modifyOneUser(_, args),
     deleteUser: async (_: any, args: any): Promise<IUser> =>
-      deleteOneUser(_, args)
+      deleteOneUser(_, args),
+
+    // Quiz
+    createQuiz: async (_: any, args: any): Promise<IQuiz> => addQuiz(_, args),
+    updateQuiz: async (_: any, args: any): Promise<IQuiz> =>
+      updateExistingQuiz(_, args),
+    deleteQuiz: async (_: any, args: any): Promise<IQuiz> =>
+      deleteOneQuiz(_, args),
+
+    // Ressource
+    createRessource: async (_: any, args: any): Promise<IRessource> =>
+      addRessource(_, args)
   }
 }
 export default resolvers

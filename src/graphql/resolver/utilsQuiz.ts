@@ -1,6 +1,6 @@
 import QuizSchema from '../../models/quiz'
 
-import { IQuestion, IResponse, IQuiz } from '../../type'
+import { IQuestion, IResponse, IQuiz } from '../../types/quizzType'
 
 export const getQuizzes = async (): Promise<IQuiz[]> => {
   try {
