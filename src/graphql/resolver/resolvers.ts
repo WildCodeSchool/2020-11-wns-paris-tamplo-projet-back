@@ -16,7 +16,7 @@ import {
   modifyOneUser,
   deleteOneUser
 } from './utilsUser'
-import { addRessource } from './utilsRessources'
+import { getRessources, addRessource } from './utilsRessources'
 
 // Types
 import { IQuiz } from '../../types/quizzType'
@@ -32,7 +32,10 @@ const resolvers = {
       getMyInfos(_, args),
 
     //Quiz
-    quizzes: async (): Promise<IQuiz[]> => getQuizzes()
+    quizzes: async (): Promise<IQuiz[]> => getQuizzes(),
+
+    // Ressource
+    ressources: async (): Promise<IRessource[]> => await getRessources()
   },
   Mutation: {
     // User
