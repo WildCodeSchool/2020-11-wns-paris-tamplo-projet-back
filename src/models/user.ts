@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose'
-import { IUser } from '../type'
+import { IUser } from '../types/userType'
 import currentDate from '../helpers/utils'
 
 const UserSchema = new Schema({

@@ -6,7 +6,7 @@ import {
   IUserCredentials,
   IUserRegistration,
   IUser
-} from '../../type'
+} from '../../types/userType'
 
 import UserSchema from '../../models/user'
 
@@ -121,7 +121,11 @@ export const oneUser = async (_: any, args: any): Promise<IUser> => {
 
 export const modifyOneUser = async (_: any, args: any): Promise<IUser> => {
   try {
-    const user = await UserSchema.findByIdAndUpdate({ _id: args.id }, args.user)
+    const user = await UserSchema.findByIdAndUpdate(
+      { _id: args.id },
+      args.user,
+      { new: true }
+    )
     if (!user) {
       throw new Error("Cette personne n'existe pas")
     }

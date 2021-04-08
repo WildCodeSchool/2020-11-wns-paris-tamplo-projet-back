@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose'
-import { IQuiz } from '../type'
+import { IQuiz } from '../types/quizzType'
 import currentDate from '../helpers/utils'
 
 const QuizSchema = new Schema({

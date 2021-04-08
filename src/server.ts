@@ -5,6 +5,7 @@ import resolvers from './graphql/resolver/resolvers'
 
 import typeDefsQuizzes from './graphql/schema/quizzes'
 import typeDefsUser from './graphql/schema/users'
+import typeDefsRessources from './graphql/schema/ressources'
 
 import { getUserData } from './utils'
 
@@ -12,7 +13,7 @@ dotenv.config()
 
 const startServer = async () => {
   const server = new ApolloServer({
-    typeDefs: [typeDefsQuizzes, typeDefsUser],
+    typeDefs: [typeDefsQuizzes, typeDefsUser, typeDefsRessources],
     resolvers,
     context: ({ req }) => {
       const { operationName } = req.body
