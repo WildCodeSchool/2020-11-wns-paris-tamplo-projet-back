@@ -46,3 +46,16 @@ export const updateExistingRessource = async (
     throw new Error("Impossible de modifier cette ressource pour l'instant.")
   }
 }
+
+export const deleteOneRessource = async (
+  _: any,
+  args: any
+): Promise<IRessource> => {
+  try {
+    const ressource = await RessourceSchema.deleteOne({ _id: args.id })
+    return ressource.n
+  } catch (error) {
+    console.error(error)
+    throw new Error("Impossible de supprimer cette ressource pour l'instant.")
+  }
+}

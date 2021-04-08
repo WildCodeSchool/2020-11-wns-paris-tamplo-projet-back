@@ -19,7 +19,8 @@ import {
 import {
   getRessources,
   addRessource,
-  updateExistingRessource
+  updateExistingRessource,
+  deleteOneRessource
 } from './utilsRessources'
 
 // Types
@@ -67,7 +68,9 @@ const resolvers = {
     createRessource: async (_: any, args: any): Promise<IRessource> =>
       addRessource(_, args),
     updateRessource: async (_: any, args: any): Promise<IRessource> =>
-      updateExistingRessource(_, args)
+      updateExistingRessource(_, args),
+    deleteRessource: async (_: any, args: any): Promise<IRessource> =>
+      deleteOneRessource(_, args)
   }
 }
 export default resolvers
