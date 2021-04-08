@@ -118,3 +118,15 @@ export const oneUser = async (_: any, args: any): Promise<IUser> => {
     throw new Error('Impossible de retrouver cet utilisateur !')
   }
 }
+
+export const modifyOneUser = async (_: any, args: any): Promise<IUser> => {
+  try {
+    const user = await UserSchema.findByIdAndUpdate({ _id: args.id }, args.user)
+    if (!user) {
+      throw new Error("Cette personne n'existe pas")
+    }
+    return user
+  } catch (error) {
+    throw new Error('Impossible de modifier cet utilisateur.')
+  }
+}

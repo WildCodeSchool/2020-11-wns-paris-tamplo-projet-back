@@ -11,7 +11,8 @@ import {
   updateMood,
   registration,
   connection,
-  oneUser
+  oneUser,
+  modifyOneUser
 } from './utilsUser'
 
 import { IAuthPayload, IQuiz, IResponseStatus, IUser } from '../../type'
@@ -30,14 +31,16 @@ const resolvers = {
     createResponsesToQuizzes: async (_: any, args: any): Promise<boolean> =>
       answerToQuiz(_, args),
     createQuiz: async (_: any, args: any): Promise<IQuiz> => addQuiz(_, args),
-    updateQuiz: async (_: any, args: any): Promise<IQuiz | null> =>
+    updateQuiz: async (_: any, args: any): Promise<IQuiz> =>
       updateExistingQuiz(_, args),
-    deleteQuiz: async (_: any, args: any): Promise<IQuiz | null> =>
+    deleteQuiz: async (_: any, args: any): Promise<IQuiz> =>
       deleteOneQuiz(_, args),
     signup: async (_: any, args: any): Promise<IResponseStatus> =>
       registration(_, args),
     login: async (_: any, args: any): Promise<IAuthPayload> =>
-      connection(_, args)
+      connection(_, args),
+    updateOneUser: async (_: any, args: any): Promise<IUser> =>
+      modifyOneUser(_, args)
   }
 }
 export default resolvers
