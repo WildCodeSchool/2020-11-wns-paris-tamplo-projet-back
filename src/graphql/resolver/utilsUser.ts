@@ -130,3 +130,16 @@ export const modifyOneUser = async (_: any, args: any): Promise<IUser> => {
     throw new Error('Impossible de modifier cet utilisateur.')
   }
 }
+
+export const deleteOneUser = async (_: any, args: any): Promise<IUser> => {
+  try {
+    const user = await UserSchema.deleteOne({ _id: args.id })
+    if (!user) {
+      throw new Error("Cet utilisateur n'existe pas !")
+    }
+    return user.n
+  } catch (error) {
+    console.error(error)
+    throw new Error("Impossible de supprimer cet utilisateur pour l'instant.")
+  }
+}

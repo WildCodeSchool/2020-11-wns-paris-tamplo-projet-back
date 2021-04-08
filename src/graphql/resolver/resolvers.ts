@@ -12,7 +12,8 @@ import {
   registration,
   connection,
   oneUser,
-  modifyOneUser
+  modifyOneUser,
+  deleteOneUser
 } from './utilsUser'
 
 import { IAuthPayload, IQuiz, IResponseStatus, IUser } from '../../type'
@@ -40,7 +41,9 @@ const resolvers = {
     login: async (_: any, args: any): Promise<IAuthPayload> =>
       connection(_, args),
     updateOneUser: async (_: any, args: any): Promise<IUser> =>
-      modifyOneUser(_, args)
+      modifyOneUser(_, args),
+    deleteUser: async (_: any, args: any): Promise<IUser> =>
+      deleteOneUser(_, args)
   }
 }
 export default resolvers

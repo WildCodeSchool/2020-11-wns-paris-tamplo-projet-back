@@ -74,6 +74,7 @@ const typeDefsUser = gql`
     updateMoodStudent(id: String, mood: inputMood): User
     createResponsesToQuizzes(id: ID, responses: inputResponsesToQuiz): Boolean
     updateOneUser(id: String, user: inputSignUp): User
+    deleteUser(id: String): Int
   }
 `
 
