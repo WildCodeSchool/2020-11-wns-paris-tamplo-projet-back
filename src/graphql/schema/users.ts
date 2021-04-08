@@ -11,11 +11,17 @@ const typeDefsUser = gql`
     email: String!
   }
 
+  type SignUpResponse {
+    success: Boolean
+    message: String
+  }
+
   input inputSignUp {
     firstname: String!
     lastname: String!
     email: String!
     password: String!
+    status: String!
   }
 
   input inputLogin {
@@ -24,7 +30,7 @@ const typeDefsUser = gql`
   }
 
   extend type Mutation {
-    signup(user: inputSignUp): AuthPayload
+    signup(user: inputSignUp): SignUpResponse
     login(user: inputLogin): AuthPayload
   }
 `

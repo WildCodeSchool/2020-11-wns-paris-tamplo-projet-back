@@ -10,7 +10,7 @@ import { JWT_SECRET } from '../../utils'
 
 const resolvers = {
   Query: {
-    students: async (): Promise<IStudent[]> => {
+    students: async (parent, args, context): Promise<IStudent[]> => {
       try {
         return await StudentSchema.find()
       } catch (error) {
@@ -96,20 +96,22 @@ const resolvers = {
         throw new Error("Impossible de supprimer ce quiz pour l'instant.")
       }
     },
-    signup: async (_: any, args: any) => {
-      const password = await bcrypt.hash(args.user.password, 10)
+    signup: async (
+      _: any,
+      { user }: { user: IUser }
+    ): Promise<{ success: boolean; message: string }> => {
+      const password = await bcrypt.hash(user.password, 10)
       try {
-        const user = new UserSchema({
-          ...args.user,
+        const newUser = new UserSchema({
+          ...user,
           password
         })
-        await user.save()
-        const token = jwt.sign({ userId: user.id }, JWT_SECRET, {
-          expiresIn: '1d'
-        })
+        await newUser.save()
         return {
-          token,
-          user
+          success: true,
+          message: `${user.firstname} ${user.lastname} a été rajouté (${
+            user.status === 'student' ? 'Etudiant' : 'Formateur'
+          })`
         }
       } catch (error) {
         console.error(error)
@@ -125,7 +127,7 @@ const resolvers = {
       if (!valid) {
         throw new Error('Invalid password')
       }
-      const token = jwt.sign({ userId: user.id }, JWT_SECRET, {
+      const token = jwt.sign({ id: user.id, status: user.status }, JWT_SECRET, {
         expiresIn: '1d'
       })
       return {
