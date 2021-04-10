@@ -13,6 +13,9 @@ dotenv.config()
 
 const startServer = async () => {
   const server = new ApolloServer({
+    subscriptions: {
+      path: '/subscriptions'
+    },
     typeDefs: [typeDefsQuizzes, typeDefsUser, typeDefsRessources],
     resolvers,
     context: ({ req }) => {

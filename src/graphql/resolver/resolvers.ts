@@ -1,3 +1,6 @@
+import { PubSub } from "apollo-server";
+const pubsub = new PubSub();
+
 // Utils Resolver
 import {
   getQuizzes,
@@ -70,7 +73,25 @@ const resolvers = {
     updateRessource: async (_: any, args: any): Promise<IRessource> =>
       updateExistingRessource(_, args),
     deleteRessource: async (_: any, args: any): Promise<IRessource> =>
-      deleteOneRessource(_, args)
+      deleteOneRessource(_, args),
+
+    // Chat
+    createMessage: (parent: any, args: any, context: any) => {
+      pubsub.publish("POST_CREATED", { messageCreated: args.input });
+      return {
+        author: {
+          firstname: args.input.author.firstname,
+          lastname: args.input.author.lastname,
+        },
+        message: args.input.message,
+        created_at: new Date().toISOString(),
+      };
+    },
+  },
+  Subscription: {
+    messageCreated: {
+      subscribe: () => pubsub.asyncIterator(["POST_CREATED"]),
+    },
   }
 }
 export default resolvers
