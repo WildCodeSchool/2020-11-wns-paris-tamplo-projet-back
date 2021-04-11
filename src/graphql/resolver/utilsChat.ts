@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/prefer-default-export
 export const sendMessage = (_: any, args: any, pubsub: any) => {
   pubsub.publish('POST_CREATED', { messageCreated: args.input })
   return {

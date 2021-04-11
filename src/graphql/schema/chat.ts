@@ -1,4 +1,4 @@
-import  { gql } from "apollo-server-express";
+import { gql } from 'apollo-server-express'
 
 const typeDefsChat = gql`
   extend type Query {
@@ -35,6 +35,6 @@ const typeDefsChat = gql`
   extend type Mutation {
     createMessage(input: inputMessage): Message
   }
-`;
+`
 
 export { typeDefsChat as default }

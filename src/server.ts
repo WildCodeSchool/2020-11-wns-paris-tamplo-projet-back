@@ -15,10 +15,17 @@ dotenv.config()
 const startServer = async () => {
   const server = new ApolloServer({
     subscriptions: {
+      onConnect: (connectionParams, webSocket, context) => {
+        console.log('Connected!')
+      },
+      onDisconnect: (webSocket, context) => {
+        console.log('Disconnected!')
+      },
       path: '/subscriptions'
     },
     typeDefs: [typeDefsQuizzes, typeDefsUser, typeDefsRessources, typeDefsChat],
     resolvers,
+    // Subscription doesn't work with context ???
     context: ({ req }) => {
       const { operationName } = req.body
       // IntrospectionQuery is to allow Audrey to use the GQL playground (at start without authorization)
