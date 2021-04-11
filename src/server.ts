@@ -6,6 +6,7 @@ import resolvers from './graphql/resolver/resolvers'
 import typeDefsQuizzes from './graphql/schema/quizzes'
 import typeDefsUser from './graphql/schema/users'
 import typeDefsRessources from './graphql/schema/ressources'
+import typeDefsChat from './graphql/schema/chat'
 
 import { getUserData } from './utils'
 
@@ -16,7 +17,7 @@ const startServer = async () => {
     subscriptions: {
       path: '/subscriptions'
     },
-    typeDefs: [typeDefsQuizzes, typeDefsUser, typeDefsRessources],
+    typeDefs: [typeDefsQuizzes, typeDefsUser, typeDefsRessources, typeDefsChat],
     resolvers,
     context: ({ req }) => {
       const { operationName } = req.body

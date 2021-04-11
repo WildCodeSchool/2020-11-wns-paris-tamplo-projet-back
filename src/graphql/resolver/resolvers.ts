@@ -1,5 +1,4 @@
-import { PubSub } from "apollo-server";
-const pubsub = new PubSub();
+import { PubSub } from 'apollo-server'
 
 // Utils Resolver
 import {
@@ -25,11 +24,14 @@ import {
   updateExistingRessource,
   deleteOneRessource
 } from './utilsRessources'
+import { sendMessage } from './utilsChat'
 
 // Types
 import { IQuiz } from '../../types/quizzType'
 import { IUser, IAuthPayload, IResponseStatus } from '../../types/userType'
 import { IRessource } from '../../types/ressourceType'
+
+const pubsub = new PubSub()
 
 const resolvers = {
   Query: {
@@ -76,22 +78,13 @@ const resolvers = {
       deleteOneRessource(_, args),
 
     // Chat
-    createMessage: (parent: any, args: any, context: any) => {
-      pubsub.publish("POST_CREATED", { messageCreated: args.input });
-      return {
-        author: {
-          firstname: args.input.author.firstname,
-          lastname: args.input.author.lastname,
-        },
-        message: args.input.message,
-        created_at: new Date().toISOString(),
-      };
-    },
+    createMessage: (_: any, args: any, context: any) =>
+      sendMessage(_, args, pubsub)
   },
   Subscription: {
     messageCreated: {
-      subscribe: () => pubsub.asyncIterator(["POST_CREATED"]),
-    },
+      subscribe: () => pubsub.asyncIterator(['POST_CREATED'])
+    }
   }
 }
 export default resolvers
