@@ -67,6 +67,8 @@ export const updateMood = async (_: any, args: any): Promise<IUser> => {
   }
 }
 
+export const tokenIsValid = async (): Promise<true> => true
+
 export const registration = async (
   _: any,
   { user }: { user: IUserRegistration }
@@ -139,7 +141,10 @@ export const modifyOneUser = async (_: any, args: any): Promise<IUser> => {
   }
 }
 
-export const deleteOneUser = async (_: any, args: any): Promise<IUser> => {
+export const deleteOneUser = async (
+  _: any,
+  args: any
+): Promise<number | undefined> => {
   try {
     const user = await UserSchema.deleteOne({ _id: args.id })
     if (!user) {

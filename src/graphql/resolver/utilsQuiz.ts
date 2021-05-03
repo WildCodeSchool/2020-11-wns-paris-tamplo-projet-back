@@ -52,7 +52,10 @@ export const updateExistingQuiz = async (_: any, args: any): Promise<IQuiz> => {
   }
 }
 
-export const deleteOneQuiz = async (_: any, args: any): Promise<IQuiz> => {
+export const deleteOneQuiz = async (
+  _: any,
+  args: any
+): Promise<number | undefined> => {
   try {
     const quiz = await QuizSchema.deleteOne({ _id: args.id })
     if (!quiz) {

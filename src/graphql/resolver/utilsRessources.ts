@@ -50,7 +50,7 @@ export const updateExistingRessource = async (
 export const deleteOneRessource = async (
   _: any,
   args: any
-): Promise<IRessource> => {
+): Promise<number | undefined> => {
   try {
     const ressource = await RessourceSchema.deleteOne({ _id: args.id })
     return ressource.n

@@ -14,7 +14,8 @@ import {
   connection,
   oneUser,
   modifyOneUser,
-  deleteOneUser
+  deleteOneUser,
+  tokenIsValid
 } from './utilsUser'
 import {
   getRessources,
@@ -40,7 +41,10 @@ const resolvers = {
     quizzes: async (): Promise<IQuiz[]> => getQuizzes(),
 
     // Ressource
-    ressources: async (): Promise<IRessource[]> => getRessources()
+    ressources: async (): Promise<IRessource[]> => getRessources(),
+
+    // TokenValidation
+    tokenValidity: async (): Promise<true> => tokenIsValid()
   },
   Mutation: {
     // User
@@ -54,14 +58,14 @@ const resolvers = {
       connection(_, args),
     updateOneUser: async (_: any, args: any): Promise<IUser> =>
       modifyOneUser(_, args),
-    deleteUser: async (_: any, args: any): Promise<IUser> =>
+    deleteUser: async (_: any, args: any): Promise<number | undefined> =>
       deleteOneUser(_, args),
 
     // Quiz
     createQuiz: async (_: any, args: any): Promise<IQuiz> => addQuiz(_, args),
     updateQuiz: async (_: any, args: any): Promise<IQuiz> =>
       updateExistingQuiz(_, args),
-    deleteQuiz: async (_: any, args: any): Promise<IQuiz> =>
+    deleteQuiz: async (_: any, args: any): Promise<number | undefined> =>
       deleteOneQuiz(_, args),
 
     // Ressource
@@ -69,7 +73,7 @@ const resolvers = {
       addRessource(_, args),
     updateRessource: async (_: any, args: any): Promise<IRessource> =>
       updateExistingRessource(_, args),
-    deleteRessource: async (_: any, args: any): Promise<IRessource> =>
+    deleteRessource: async (_: any, args: any): Promise<number | undefined> =>
       deleteOneRessource(_, args)
   }
 }

@@ -10,6 +10,7 @@ const typeDefsUser = gql`
     users: [User]
     getOneUser(id: ID!): User
     myInformations: User
+    tokenValidity: Boolean
   }
 
   type User {
