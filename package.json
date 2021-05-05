@@ -40,15 +40,15 @@
     "typescript": "^4.1.3"
   },
   "scripts": {
-    "start": "npm run dev",
+    "start": "npm run prod",
     "build": "tsc",
     "lint": "eslint src/ & echo 'lint complete'",
     "test": "npm run lint && npm run format",
     "format": "prettier src/",
     "lintfix": "eslint --fix . ",
     "dev": "ts-node-dev --transpile-only --respawn  ./src/server.ts",
-    "prod": "tsc && node ./built/src/server.js",
-    "debug": "tsc && node --inspect ./built/src/server.js"
+    "prod": "node ./build/server.js",
+    "debug": "tsc && node --inspect ./build/server.js"
   },
   "repository": {
     "type": "git",
