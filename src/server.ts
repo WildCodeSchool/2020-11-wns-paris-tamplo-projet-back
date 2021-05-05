@@ -43,7 +43,7 @@ const startServer = async () => {
     .catch((err) => console.log(err))
 
   server.listen({ port: 4000 }).then(({ url }) => {
-    console.log(`🚀 Server ready at ${url} !!!`)
+    console.log(`🚀 Server ready at ${url} !`)
   })
 }
 
