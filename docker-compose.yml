@@ -3,11 +3,11 @@ version: '2'
 services:
   app:
     build: .
-    image: tamplo_server
+    image: tamplo_server_dev
     ports:
       - 4000:4000
     env_file:
       - .env
     volumes:
       - ./src:/app/src
-    container_name: server-tamplo
+    container_name: server-tamplo-dev
