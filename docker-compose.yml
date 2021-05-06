@@ -1,13 +1,15 @@
-version: '2'
+version: '3'
 
 services:
   app:
-    build: .
-    image: tamplo_server
+    build:
+      context: .
+      dockerfile: ${DOCKERFILE_NAME}
+    image: ${DOCKER_IMAGE_NAME}
     ports:
-      - 4000:4000
+      - ${API_PORT}:4000
     env_file:
       - .env
     volumes:
       - ./src:/app/src
-    container_name: server-tamplo
+    container_name: ${DOCKER_CONTAINER_NAME}

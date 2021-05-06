@@ -42,7 +42,7 @@ const startServer = async () => {
     .then(() => console.log('Connected to database'))
     .catch((err) => console.log(err))
 
-  server.listen({ port: process.env.API_URL }).then(({ url }) => {
+  server.listen({ port: 4000 }).then(({ url }) => {
     console.log(`🚀 Server ready at ${url} ! Houra !`)
   })
 }
